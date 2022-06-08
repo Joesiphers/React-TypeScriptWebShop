@@ -3,7 +3,9 @@ import AccDetails from "./accountdetails";
 import "./account.css";
 import { Route, Link, Routes,Outlet} from "react-router-dom";
 import Orders from "./orders";
-import Favories from "./favories";
+import Favories from "../favories/favories";
+import MyCart from "../Cart/myCart";
+import Checkout from "../Cart/checkOut";
 const ini={
     input:{
         firstName:{
@@ -25,52 +27,44 @@ const ini={
         },
         formValid:true
     }
-    
-
- 
  const  address={streetNumber:"6 mott court",
  city:"glen",
  state:"vic",
  postcode:3150,
 }
-
-
-
 export default function MyAccount (){
     return(
         <Wrapper>
-        <LeftColumn><img src="" alt="MyPhoto"/>
+        <LeftColumn>
         <Link to="accountDetails" > <p>My Details</p></Link>
-        <p>My Favor</p>
+        <Link to="favories" ><p>My Favor</p></Link>
         <p><Link to="orders" >My Orders </Link> </p>
+        <p><Link to="cart" >My Cart </Link> </p>
         </LeftColumn>
         <RightColumn> 
-            <div>More information </div>
             <Outlet/> 
         <Routes>        
             <Route path="accountDetails" 
             element={<AccDetails  />} />
-            <Route path="orders" 
-            element={<Favories />} />
-            <Route path="orders" 
-            element={<Orders />} />
+            <Route path="favories" element={<Favories />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="cart/*" element={<MyCart />}/>
+            <Route path="checkout" element={<Checkout/>}/>
+
         </Routes>  
         </RightColumn>
         </Wrapper>
     )
 }
 
-const Label=styled.label`
-    position:absolute ;
-    left:0 ;
-    `;
 
 const Wrapper=styled.div`
     display:flex ;
 `;
 const LeftColumn=styled.div`
-    width:20%;
+    width:15%;
+    margin:2rem 2rem ;
 `;
 const RightColumn=styled.div`
-    width:80%;
+    width:85%;
 `;

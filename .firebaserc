@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "supersharpscreen"
-  }
+    "default": "superSharpscreen",
+    "ownCart": "reacttypescriptshop"
+  },
+  "targets": {}
 }

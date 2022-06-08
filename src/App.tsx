@@ -4,7 +4,7 @@ import Banner from './pages/banner';
 import {BrowserRouter, Routes,Route } from 'react-router-dom'
 import ScrollToTop from './share/ScrollToTop';
 import Home from './pages/home';
-import ProductDetail from './Products/ProductDetail';
+import ProductDetail from './components/Products/ProductDetail';
 import RpiDocs from './components/RPidocs/PiDocuments';
 import Contact from './pages/Contact';
 import MyAccount from './components/account/MyAccount';

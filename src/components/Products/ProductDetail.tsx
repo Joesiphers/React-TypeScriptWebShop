@@ -1,17 +1,35 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { Fragment } from "react/cjs/react.production.min";
-import  getProducts  from "../products.js";
-import BuyButton from "../share/BuyButton";
-export default function ProductDetail (props){
+import  getProducts  from "../../products.js";
+import BuyButton from "../../share/BuyButton";
+import { ICart } from "../Cart/cartSlice";
+
+interface IData{
+        id: string;
+        sku: number;
+        title: string;
+        availableSizes: string[];
+        style: string;
+        price: number;
+        installments: number;
+        currencyId: string;
+        currencyFormat: string;
+        isFreeShipping: boolean;
+        description: string[];
+        images: string[];
+        thumbImg: string[];
+    }
+
+export default function ProductDetail (){
     const params=useParams();
     const data=getProducts()
-    const id=parseInt(params.productId) 
+    const id=params.productId
     let result=data.find(item=>item.id===id)
-    const {price,description,images}=result;
-//console.log(result,"result",params,"params");
-    return ( <Fragment>
-        <Title>{result.title}</Title>
+  //  console.log(result,"result",data,id);
+    const {price,description,images}=result!;
+
+    return ( <>
+        <Title>{result!.title}</Title>
         <Mainwrapper>
             <Imagewrap>
                 <img src={images[0]} alt="super Sharp"/>
@@ -32,7 +50,7 @@ export default function ProductDetail (props){
             </Black>
         </Mainwrapper>
         <Mainwrapper> <img src={images[2]} alt="pics"/></Mainwrapper>
-    </Fragment>
+    </>
       )
     }
 

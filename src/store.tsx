@@ -1,10 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit";
-import favorReducer from "./share/favories/favorSlice";
-import cartReducer from "./share/shoppingCart/cartSlice"
+import favorReducer from "./components/favories/favorSlice";
+import cartReducer from "./components/Cart/cartSlice"
+import accountReducer from "./components/account/accountSlice";
  const store=configureStore ({
     reducer:{
         favor: favorReducer,
-        cart:cartReducer
+        cart:cartReducer,
+        account:accountReducer
     }
 })
 // Infer the `RootState` and `AppDispatch` types from the store itself

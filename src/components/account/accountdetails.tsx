@@ -2,28 +2,29 @@ import styled from "styled-components"
 import useForm  from "../../share/formHook";
 import Input from "../../share/Input";
 import React, { useState} from "react";
-const user={
-    firstName:"string",
-    lastName:"string",
-    email:"string",
-    phone:"string",
-    gender:"string",
-    }
-interface IProps{
-    
-        firstName:string;
-        lastName:string;
-        email:string;
-        phone:string;
-        gender:string;
-        address:{streetNumber:string;
-            city:string;
-            state:string;
-            postcode:string;
-        
-    }
+import { changeAcc,IUser } from "./accountSlice";
+import { useAppDispatch, useAppSelector } from "../../reduxHooks";
+// const user={
+//     firstName:"string",
+//     lastName:"string",
+//     email:"string",
+//     phone:"string",
+//     gender:"string",
+//     }
+// let init:initate ={
+//     input:{firstName:
+//             {value:"v" as keyof typeof user,isValid:false} },
+//     formValid:true};
+// Object.keys(user).forEach((key)=>{
+//         //console.log( user[key] );
+//         init.input[key]={value:"",isValid:false}
+//     })
+const users=["firstName", "lastName", "email", "phone", "gender",
+    "streetNumber","streetSecondLine","city","state", "postCode" ]
+interface In{
+   [key:string] :{value:string, isValid:boolean };
 }
-interface initate{
+interface Iformdata{
     input:{
     [key:string]:{
         value:string, 
@@ -31,30 +32,27 @@ interface initate{
     }},
     formValid:boolean
 }
+let int:Iformdata={input:{},formValid:false };
+for (var i of users ){
+    int.input[i]={value:"", isValid:false}
+} //create a init obj from array 
+console.log(int)
+
+
 const AccDetails = ()=>{
     const [imgUrl, setImgUrl]=useState<string>();
     const [file, setFile]=useState<File> ();
-    let init:initate ={
-        input:{firstName:
-            {value:"v" as keyof typeof user,isValid:false} },
-    formValid:true};
-    //  for (let i in user){
-    //       let v=user[i as keyof typeof user ] 
-    //       init.input[i]={value:v,isValid:false}
-    //      console.log( v );
-       
-    //     };
-    Object.keys(user).forEach((key)=>{
-        //console.log( user[key] );
-        init.input[key]={value:"",isValid:false}
-    })
-    const {inputHandler, formState}=useForm(init);
+    const dispatch=useAppDispatch()
+    const accInfo=useAppSelector(state=>state.account)
+    
+    const {inputHandler, formState}=useForm (int);
+    
     const [checked,setChecked]=useState(" ")
     const checkedHandler=(e:React.ChangeEvent<HTMLInputElement> )=>{
         setChecked(e.target.value);
         inputHandler(e.target.id,e.target.value,true )
     } 
-    const sumit=()=>{
+    const submit=()=>{
         console.log ("formstate",formState)
     }
     let formDatas:{
@@ -106,23 +104,24 @@ const AccDetails = ()=>{
                     <Input type="text" id="email" inputHandler={inputHandler} />
 
                 </p>
-                <p>  <InputLabel htmlFor="imgchoose" >
+ </Left>
+                <Right>
+                    <img src={imgUrl} alt="" width="200" style={{"border":"solid 1px grey"}} />
+                    <p>  <InputLabel htmlFor="imgchoose" >
                     Hi choose your image</InputLabel>
                     <input type="file" name="file" id="imgchoose" accept=".png,.jpg" 
                     onChange={imgHandler}  hidden />
-                    </p> </Left>
-                <Right>
-                    <img src={imgUrl} alt="" width="200" style={{"border":"solid 1px grey"}} />
-                </Right>
+                    </p>
+                    </Right>
                 </Wrapper>
                 <p>
                     <label>Address:</label>
                 </p>
                 <p className="plass">
-                    <Label htmlFor="street">Street number</Label>
-                    <Input type="text" id="street" inputHandler={inputHandler}  /> <br />
-                    <Input type="text" id="secondline" inputHandler={inputHandler}  /> <br />
-                    <Label htmlFor="suburb">suburb</Label>
+                    <Label htmlFor="address"> Street number</Label>
+                    <Input type="text" id="streetNumber" inputHandler={inputHandler}  /> <br />
+                    <Input type="text" id="streetSecondLine" inputHandler={inputHandler}  /> <br />
+                    <Label htmlFor="suburb">Suburb</Label>
                     <Input type="text" id="city" inputHandler={inputHandler} /> <br />
                     <Label>State</Label>
                     <Input id="state" type="text" inputHandler={inputHandler} /> <br />
@@ -132,7 +131,7 @@ const AccDetails = ()=>{
                     <Input id="phone" type="text" inputHandler={inputHandler} />
                     
                 </p>
-                <button onClick={sumit}>Sumit</button>
+                <button onClick={submit}>Submit</button>
                 <form onChange={formChange} onSubmit={formSubmit}>
                     <input name="t1" id="1T" type="text"/>
                     <input type="text" name="t2" />

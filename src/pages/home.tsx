@@ -1,38 +1,28 @@
 import styled from "styled-components"
 import  {Link} from "react-router-dom";
 import  getProducts  from "../products";
-import { useAppDispatch,useAppSelector } from "../reduxHooks";
-import { addFavory } from "../share/favories/favorSlice";
-import { addCart } from "../share/shoppingCart/cartSlice";
+import CartandFavory from "../share/addToFavories";
+import {useTotal } from "../components/Cart/sum"
+
 const Home= ()=>{
     const list=getProducts();//return a array [] of product list with descs
-    const dispatch=  useAppDispatch()
-    const favoryList=useAppSelector((state)=>state.favor)
-    const addToFravory=(id)=>{
-        let result=favoryList.find(item=>item===id)
-        console.log(result)
-        {!result&&dispatch(addFavory(id))}
-    }        ;
-    const addToCart=(id)=>{
-            dispatch(addCart(id))}
-            
-    
+const total=useTotal()
     return  <>  
             <ColumnDiv>
             {list.map(item=>(
                 <ItemDiv key={item.id}>
                       <Link to={`/product/${item.id} `}>
                         <div>{item.title}</div> 
-                        <img src={item.thumbImg}  alt=""/>
+                        <img src={item.thumbImg[0]}  alt=""/>
                         <div>Price: US$ {item.price}.00</div>
                         
                         </Link>
-                        <button onClick={()=> addToFravory(item.id) }>
-                            add favories
-                            </button>
-                            <button onClick={()=>addToCart(item.id)}>
-                            add to Cart
-                            </button>
+                    <CartandFavory 
+                    id={item.id} 
+                    quantity={1} 
+                    price={item.price} 
+                    title={item.title}
+                    />
                 </ItemDiv>
             ))}
             </ColumnDiv>

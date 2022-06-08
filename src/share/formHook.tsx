@@ -19,10 +19,11 @@ interface FormState{
  const formReducer=(state:FormState, action:Action) =>{
         switch (action.type) {
             case "INPUT":
-                console.log("ActionRec Input",action);
+                console.log( state, "ActionRec Input",action);
                 let newState={...state};
-                newState.input[action.payload.id]={value:action.payload.value,
-                                            isValid:action.payload.isValid};
+                let input={...newState.input}
+                input[action.payload.id]={value:action.payload.value||'',
+                                            isValid:action.payload.isValid||false};
             console.log("state",newState)
             return newState;
             default: return state;

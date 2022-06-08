@@ -4,20 +4,14 @@ import { useReducer,useState,useContext} from "react";
 import Input from "../../share/Input";
 import { AuthContext } from "../../context/AuthContext";
 import useForm  from "../../share/formHook";
-
-
 interface Props{
     onClick:()=>void
 };
-
 interface InputValue{
     [keys:string]:{
         value:string, 
         isValid:boolean}
 } ;
-
-
-
 interface Action{
     type:string,
     id:string,
